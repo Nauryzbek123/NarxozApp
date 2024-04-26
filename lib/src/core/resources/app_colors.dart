@@ -17,5 +17,11 @@ class AppColors {
   static const Color horLineColor = Color(0xFFDDDADA);
   // Navs item grey color
   static const Color NavItemGrey = Color(0xFF828292);
+  // Grey line color
+  static const Color greyLineColor = Color(0xFFE8E8E8);
+  // Bold black color
+  static const Color boldBlackColor = Color(0xFF161620);
+// Regular black color
+  static const Color regularBlacColor = Color(0xFF000000);
   AppColors._();
 }

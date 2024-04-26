@@ -9,6 +9,7 @@ import 'package:narxoz_project/src/features/screens/home/HomePage.dart';
 import 'package:narxoz_project/src/features/screens/home/NewsPage.dart';
 import 'package:narxoz_project/src/features/screens/home/ProfilePage.dart';
 import 'package:narxoz_project/src/features/screens/home/SectionsPage.dart';
+import 'package:narxoz_project/src/features/screens/home/homePages/NotificationPage.dart';
 
 import '../../screens/Auth/LoginScreen.dart';
 
@@ -30,9 +31,9 @@ import '../../screens/Auth/LoginScreen.dart';
           AutoRoute(path: 'sections',page: SectionsPage),
           AutoRoute(path: 'news',page: NewsPage),
           AutoRoute(path: 'profile',page: ProfilePage),
-        ]
-        
-      )
+        ], 
+      ), 
+      AutoRoute(page: NotificationPage,path: '/notification')
 
 
 
