@@ -1,11 +1,14 @@
 import 'dart:ui';
 
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:narxoz_project/src/core/resources/app_colors.dart';
 import 'package:narxoz_project/src/core/widgets/column_spacer.dart';
 import 'package:narxoz_project/src/core/widgets/row_spacer.dart';
+import 'package:narxoz_project/src/features/app/router/router.gr.dart';
 
 import '../../../core/resources/ManropeText.dart';
 import '../../../core/resources/onboarding_bold_black_text.dart';
@@ -35,25 +38,29 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 5, top: 5),
                       child: Image.asset('assets/png/NavBarNarxoz.png'),
                     ),
-                    SizedBox(
-                      width: 70,
-                      height: 24,
-                      child: Stack(
-                        children: [
-                          SvgPicture.asset('assets/svg/notifIcon.svg'),
-                          Positioned(
-                            top: 0,
-                            left: 22,
-                            child: Container(
-                              width: 8,
-                              height: 8,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.red,
+                    GestureDetector(
+                      onTap: () =>
+                  AutoRouter.of(context).push(const NotificationRoute()),
+                      child: SizedBox(
+                        width: 70,
+                        height: 24,
+                        child: Stack(
+                          children: [
+                            SvgPicture.asset('assets/svg/notifIcon.svg'),
+                            Positioned(
+                              top: 0,
+                              left: 22,
+                              child: Container(
+                                width: 8,
+                                height: 8,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.red,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],

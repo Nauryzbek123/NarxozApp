@@ -23,5 +23,23 @@ class AppColors {
   static const Color boldBlackColor = Color(0xFF161620);
 // Regular black color
   static const Color regularBlacColor = Color(0xFF000000);
+  // Light Black color
+  static const Color lightBlackColor = Color(0xFF303044);
+  // Silver Color
+  static const Color silverColor = Color(0xFF969696);
+
+  // Rect back Color
+  static const Color RectBackgr = Color(0xFFEBEBEB);
+
+// Star color
+  static const Color StarColor = Color(0xFFE4A70A);
+
+  // Bold Red
+  static const Color RedBold = Color(0xFFD40000);
+
+  // Green color 
+    static const Color GreenColor = Color(0xFF5EB161);
+
+
   AppColors._();
 }

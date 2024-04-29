@@ -8,7 +8,7 @@ class ManropeText extends StatelessWidget {
   final Color color;
   final FontWeight fontWeight;
 
-  const ManropeText(this.text, this.val, this.color,this.fontWeight, {Key? key})
+  const ManropeText(this.text, this.val, this.color,this.fontWeight,  {Key? key})
       : super(key: key);
 
   @override

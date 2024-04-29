@@ -10,8 +10,10 @@ import 'package:narxoz_project/src/features/screens/home/NewsPage.dart';
 import 'package:narxoz_project/src/features/screens/home/ProfilePage.dart';
 import 'package:narxoz_project/src/features/screens/home/SectionsPage.dart';
 import 'package:narxoz_project/src/features/screens/home/homePages/NotificationPage.dart';
+import 'package:narxoz_project/src/features/screens/home/sections/ShowLessonStudent.dart';
 
 import '../../screens/Auth/LoginScreen.dart';
+import '../../screens/home/sections/SectionsDetailPage.dart';
 
 @MaterialAutoRouter(
     replaceInRouteName: 'Page,Route',
@@ -33,8 +35,9 @@ import '../../screens/Auth/LoginScreen.dart';
           AutoRoute(path: 'profile',page: ProfilePage),
         ], 
       ), 
-      AutoRoute(page: NotificationPage,path: '/notification')
-
+      AutoRoute(page: NotificationPage,path: '/notification'), 
+      AutoRoute(page: SectionsDetailPage,path: '/sectionsPage'),
+      AutoRoute(page: ShowLessonStudent,path: '/showLessonStudent')
 
 
 
