@@ -58,35 +58,36 @@ class _LoginScreenState extends State<LoginScreen> {
             const ColumnSpacer(13),
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
-                state is LogInSuccess
-                    ? context.router.replaceAll([BottomNavBar()])
-                    : null;
-                state is LogInFailed
-                    ? showDialog(
-                        context: context,
-                        builder: (ctx) => AlertDialog(
-                              title: const Text(""),
-                              content: const Text("Не корректно"),
-                              actions: <Widget>[
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.of(ctx).pop();
-                                    },
-                                    child: Container(
-                                      color: Colors.green,
-                                    )
-                                    )
-                              ],
-                            )
-                            )
-                    : null;
+                if (state is LogInSuccess) {
+                  context.read<AuthBloc>().addUserInfo(state.authData[0]);
+                  print('ob: ${state.authData[0].data}');
+                  context.router.replaceAll([BottomNavBar()]);
+                } else if (state is LogInFailed) {
+                  showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                            title: const Text(""),
+                            content: Text(state.message),
+                            actions: <Widget>[
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(ctx).pop();
+                                  },
+                                  child: Container(
+                                    color: Colors.green,
+                                  ))
+                            ],
+                          ));
+                }
               },
               builder: (context, state) {
                 return Buttonwidget(
                   text: "Вход",
-                  onTap: () =>context.read<AuthBloc>().add(
-                  LogInUser(id: _loginController.text, password: _passwordController.text),
-                  ) ,
+                  onTap: () => context.read<AuthBloc>().add(
+                        LogInUser(
+                            id: _loginController.text,
+                            password: _passwordController.text),
+                      ),
                   containerColor: AppColors.redColor,
                   textColor: AppColors.whiteColor,
                   fontWeight: FontWeight.w800,
@@ -100,7 +101,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const ColumnSpacer(3),
             Text(_passwordController.text.toString())
-            
           ],
         ),
       ),

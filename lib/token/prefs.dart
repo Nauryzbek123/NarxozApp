@@ -6,7 +6,8 @@ class PreferencesService {
   late final SharedPreferences _prefs;
 
   static const String tokenKeyKey =
-      'Bearer 22|2GLyG1TojxizAoIDoEBpimPWp1LiSo4IqrT25Otofc3e3ea0';
+      '';
+      //Bearer 22|2GLyG1TojxizAoIDoEBpimPWp1LiSo4IqrT25Otofc3e3ea0
   static const String userIdKey = 'userId';
 
   String _tokenKey = '';

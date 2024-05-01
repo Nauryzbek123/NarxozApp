@@ -28,7 +28,6 @@ class AuthDataSourceImpl implements AuthDataSource {
         'password': password,
       });
     
-    print('Response Body: ${response.data}');
     return response;
   }
 }
