@@ -4,11 +4,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:narxoz_project/src/core/widgets/column_spacer.dart';
 import 'package:narxoz_project/src/features/app/router/router.gr.dart';
+import 'package:narxoz_project/src/features/screens/Auth/logic/data/bloc/auth_bloc.dart';
 
+import '../../../core/dependencies/getIt.dart';
 import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/onboarding_bold_black_text.dart';
 import '../../../core/widgets/TextFieldGrey.dart';
 import '../../../core/widgets/button_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,77 +21,88 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const ColumnSpacer(20),
-          const OnBoardingBoldBlackText("Добро пожаловать", 20),
-          const ColumnSpacer(5),
-          const TextFormFieldGrey(
-            hint: "Логин",
-            prefixIc: 'assets/svg/loginIcon.svg',
-            sufficIc: 'none',
-          ),
-          const ColumnSpacer(2),
-          const TextFormFieldGrey(
-            hint: "Пароль",
-            prefixIc: 'assets/svg/Lock.svg',
-            sufficIc: 'assets/svg/HidePassword.svg',
-          ),
-          const ColumnSpacer(1.8),
-          Text(
-            "Забыли пароль?",
-            style: GoogleFonts.manrope(
-                color: AppColors.textFieldTextColor,
-                fontSize: 12,
-                fontWeight: FontWeight.w300),
-          ),
-          const ColumnSpacer(13),
-          Buttonwidget(
-            text: "Вход",
-            onTap: () => {AutoRouter.of(context).push(const BottomNavBar())},
-            containerColor: AppColors.redColor,
-            textColor: AppColors.whiteColor,
-            fontWeight: FontWeight.w800,
-            fontSize: 18,
-            width: 315, 
-            height: 60,
-            circ: 15,
-            icon: 'assets/svg/SignUp.svg',
-          ),
-          const ColumnSpacer(3),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-             const SizedBox(
-                width: 141,
-                child: Divider(
-                  color: AppColors.horLineColor, // Change color as needed
-                  thickness: 1, // Change thickness as needed
-                ),
-              ),
-              Text(
-            "Or",
-            style: GoogleFonts.inter(
-                color: AppColors.blackColor,
-                fontSize: 12,
-                fontWeight: FontWeight.w300),
-          ),
-          const SizedBox(
-                width: 141,
-                child: Divider(
-                  color: AppColors.horLineColor, // Change color as needed
-                  thickness: 1, // Change thickness as needed
-                ),
-              ),
-            ],
-          ),
-          const ColumnSpacer(3),
-          SvgPicture.asset('assets/svg/google.svg')
-        ],
+    return BlocProvider(
+      create: (context) => getIt<AuthBloc>(),
+      child: Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const ColumnSpacer(20),
+            const OnBoardingBoldBlackText("Добро пожаловать", 20),
+            const ColumnSpacer(5),
+            TextFormFieldGrey(
+              hint: "Логин",
+              prefixIc: 'assets/svg/loginIcon.svg',
+              sufficIc: 'none',
+              controller: _loginController,
+            ),
+            const ColumnSpacer(2),
+            TextFormFieldGrey(
+              hint: "Пароль",
+              prefixIc: 'assets/svg/Lock.svg',
+              sufficIc: 'assets/svg/HidePassword.svg',
+              controller: _passwordController,
+            ),
+            const ColumnSpacer(1.8),
+            Text(
+              "Забыли пароль?",
+              style: GoogleFonts.manrope(
+                  color: AppColors.textFieldTextColor,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w300),
+            ),
+            const ColumnSpacer(13),
+            BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                state is LogInSuccess
+                    ? context.router.replaceAll([BottomNavBar()])
+                    : null;
+                state is LogInFailed
+                    ? showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                              title: const Text(""),
+                              content: const Text("Не корректно"),
+                              actions: <Widget>[
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(ctx).pop();
+                                    },
+                                    child: Container(
+                                      color: Colors.green,
+                                    )
+                                    )
+                              ],
+                            )
+                            )
+                    : null;
+              },
+              builder: (context, state) {
+                return Buttonwidget(
+                  text: "Вход",
+                  onTap: () =>context.read<AuthBloc>().add(
+                  LogInUser(id: _loginController.text, password: _passwordController.text),
+                  ) ,
+                  containerColor: AppColors.redColor,
+                  textColor: AppColors.whiteColor,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 18,
+                  width: 315,
+                  height: 60,
+                  circ: 15,
+                  icon: 'assets/svg/SignUp.svg',
+                );
+              },
+            ),
+            const ColumnSpacer(3),
+            Text(_passwordController.text.toString())
+            
+          ],
+        ),
       ),
     );
   }

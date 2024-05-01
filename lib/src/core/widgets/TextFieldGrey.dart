@@ -7,12 +7,14 @@ class TextFormFieldGrey extends StatelessWidget {
   final String hint;
   final String prefixIc;
   final String? sufficIc;
+ final TextEditingController controller;
 
   const TextFormFieldGrey({
     Key? key,
     required this.hint,
     required this.prefixIc, 
-     this.sufficIc
+     this.sufficIc, 
+     required this.controller,
   }) : super(key: key);
 
   @override
@@ -20,6 +22,7 @@ class TextFormFieldGrey extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25),
       child: TextFormField(
+        controller: controller,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
@@ -46,6 +49,7 @@ class TextFormFieldGrey extends StatelessWidget {
           hintStyle: TextStyle(color: AppColors.textFieldTextColor),
           hintText: hint,
         ),
+        
       ),
     );
   }
