@@ -54,6 +54,10 @@ class _LoginScreenState extends State<LoginScreen> {
             textColor: AppColors.whiteColor,
             fontWeight: FontWeight.w800,
             fontSize: 18,
+            width: 315, 
+            height: 60,
+            circ: 15,
+            icon: 'assets/svg/SignUp.svg',
           ),
           const ColumnSpacer(3),
           Row(

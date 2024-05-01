@@ -10,6 +10,12 @@ class Buttonwidget extends StatelessWidget {
   final Color textColor;
   final double fontSize;
   final FontWeight fontWeight;
+  final double width;
+  final double height;
+  final double circ;
+  final String icon; 
+  final Color? borderColor;
+  final double? borderWidth;
   const Buttonwidget({
     required this.text,
     required this.onTap,
@@ -17,6 +23,12 @@ class Buttonwidget extends StatelessWidget {
     required this.textColor,
     required this.fontSize,
     required this.fontWeight,
+    required this.width,
+    required this.height,
+    required this.circ,
+    required this.icon,
+    this.borderColor,
+    this.borderWidth,
     Key? key,
   }) : super(key: key);
 
@@ -25,29 +37,32 @@ class Buttonwidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 315,
-        height: 60,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
-          color: containerColor,
-        ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment:MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset('assets/svg/SignUp.svg'),
-              RowSpacer(0.5),
-              Text(
-            text,
-            style: GoogleFonts.manrope(
-                fontSize: fontSize, color: textColor, fontWeight: fontWeight),
-            textAlign: TextAlign.center,
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(circ)),
+            color: containerColor,
+            border: borderColor != null
+              ? Border.all(color: borderColor!, width: borderWidth ?? 1.0) // Apply border color and width if provided
+              : null, // No border if borderColor is not provided
           ),
-            ],
-          ),
-        )
-        
-      ),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(icon),
+                RowSpacer(0.5),
+                Text(
+                  text,
+                  style: GoogleFonts.manrope(
+                      fontSize: fontSize,
+                      color: textColor,
+                      fontWeight: fontWeight),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

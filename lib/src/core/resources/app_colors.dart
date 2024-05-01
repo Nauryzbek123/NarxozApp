@@ -39,7 +39,17 @@ class AppColors {
 
   // Green color 
     static const Color GreenColor = Color(0xFF5EB161);
+    //Text orange
+    
+    static const Color OrangeText = Color(0xFFFEB052);
+    
+    // BlackProfile color 
+    
+    static const Color ProfileBlackColor = Color(0xFF1A1E25);
 
+    // nav gray col 
+    
+    static const Color navGray = Color(0xFF7D7F88);
 
   AppColors._();
 }

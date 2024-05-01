@@ -60,6 +60,7 @@ dependencies:
   path: ^1.8.3
   injectable: ^2.1.2
   injectable_generator: ^2.1.6
+  syncfusion_flutter_calendar: ^25.1.42
 
 dev_dependencies:
   flutter_test:
