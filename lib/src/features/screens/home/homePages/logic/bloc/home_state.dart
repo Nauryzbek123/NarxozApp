@@ -1,10 +1,26 @@
 part of 'home_bloc.dart';
 
-sealed class HomeState extends Equatable {
-  const HomeState();
-  
+class HomeState {}
+
+class HomeInitialState extends HomeState {}
+
+// All States in one
+class MenuLoading extends HomeState {
   @override
-  List<Object> get props => [];
+  // TODO: implement props
+  List<Object?> get props => [];
 }
 
-final class HomeInitial extends HomeState {}
+class MenuSuccess extends HomeState {
+  final List<NewsIndexModel> newsIndexData;
+  List<TeachersIndexModel> teacherIndex;
+  List<MyLessonsModel> userLessons;
+
+  MenuSuccess({required this.newsIndexData,required this.teacherIndex,required this.userLessons});
+}
+
+class MenuError extends HomeState {
+  final String? message;
+
+  MenuError({required this.message});
+}

@@ -1,8 +1,9 @@
 part of 'home_bloc.dart';
 
-sealed class HomeEvent extends Equatable {
-  const HomeEvent();
+class HomeEvent {}
 
+
+class MenuDataEvent extends HomeEvent{
   @override
-  List<Object> get props => [];
+    List<Object?> get props => [];
 }

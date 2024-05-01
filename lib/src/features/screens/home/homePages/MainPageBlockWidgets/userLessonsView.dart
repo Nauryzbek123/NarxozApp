@@ -1,59 +1,79 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:narxoz_project/src/core/widgets/column_spacer.dart';
-import 'package:narxoz_project/src/core/widgets/row_spacer.dart';
+import 'package:narxoz_project/src/features/screens/home/homePages/logic/bloc/home_bloc.dart';
 
-import '../../../core/resources/ManropeText.dart';
-import '../../../core/resources/app_colors.dart';
-import '../../../core/resources/onboarding_bold_black_text.dart';
-import '../../../core/widgets/horizontalLine.dart';
-import 'LessonsDayWidget.dart';
+import '../../../../../core/dependencies/getIt.dart';
+import '../../../../../core/resources/ManropeText.dart';
+import '../../../../../core/resources/app_colors.dart';
+import '../../../../../core/widgets/column_spacer.dart';
+import '../../../../../core/widgets/horizontalLine.dart';
+import '../../../../../core/widgets/row_spacer.dart';
+import '../../../../app/widgets/LessonsDayWidget.dart';
+import '../../../../app/widgets/LessonsTimeWidget.dart';
 
-class LessonsTimeWidget extends StatelessWidget {
-  const LessonsTimeWidget({Key? key}) : super(key: key);
+class UserLessonView extends StatelessWidget {
+  const UserLessonView({super.key});
 
-  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          contentPadding: EdgeInsets.only(left: 22, right: 20),
-          title: ManropeText(
-            "leftText",
-            10,
-            AppColors.NavItemGrey,
-            FontWeight.bold,
-          ),
-          trailing: ManropeText(
-            "rightText",
-            10,
-            AppColors.NavItemGrey,
-            FontWeight.bold,
-          ),
-        ),
-        HorizontalLine(
-            width: 348,
-            color: AppColors.greyLineColor,
-          ),
-        ListView.builder(
-            padding: EdgeInsets.only(bottom: 50),
-            scrollDirection: Axis.vertical,
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: 20,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: _buildContainer(),
+    return BlocProvider(
+      create: (context) => getIt<HomeBloc>(),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is MenuError) {
+            return const Center(
+              child: Text("error"),
+            );
+          }
+          if (state is MenuSuccess) {
+            return Builder(builder: (context) {
+              return Column(
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.only(left: 22, right: 20),
+                    title: ManropeText(
+                      "leftText",
+                      10,
+                      AppColors.NavItemGrey,
+                      FontWeight.bold,
+                    ),
+                    trailing: ManropeText(
+                      "rightText",
+                      10,
+                      AppColors.NavItemGrey,
+                      FontWeight.bold,
+                    ),
+                  ),
+                  HorizontalLine(
+                    width: 348,
+                    color: AppColors.greyLineColor,
+                  ),
+                  ListView.builder(
+                      padding: EdgeInsets.only(bottom: 50),
+                      scrollDirection: Axis.vertical,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: 20,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: _buildContainer(),
+                        );
+                      }),
+                  ManropeText(
+                    "Показать еще",
+                    12,
+                    AppColors.redColor,
+                    FontWeight.bold,
+                  ),
+                ],
               );
-            }),
-             ManropeText(
-            "Показать еще",
-            12,
-            AppColors.redColor,
-            FontWeight.bold,
-          ),
-      ],
+            });
+          }
+          
+          return Container();
+        },
+      ),
     );
   }
 

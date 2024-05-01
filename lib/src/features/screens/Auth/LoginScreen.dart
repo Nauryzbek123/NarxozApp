@@ -1,11 +1,14 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:narxoz_project/src/core/widgets/column_spacer.dart';
 import 'package:narxoz_project/src/features/app/router/router.gr.dart';
+import 'package:narxoz_project/src/features/screens/Auth/UserInfo.dart';
 import 'package:narxoz_project/src/features/screens/Auth/logic/data/bloc/auth_bloc.dart';
 
+import '../../../../token/prefs.dart';
 import '../../../core/dependencies/getIt.dart';
 import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/onboarding_bold_black_text.dart';
@@ -23,6 +26,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _loginController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final PreferencesService _preferencesService = getIt<PreferencesService>();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -60,8 +64,28 @@ class _LoginScreenState extends State<LoginScreen> {
               listener: (context, state) {
                 if (state is LogInSuccess) {
                   context.read<AuthBloc>().addUserInfo(state.authData[0]);
-                  print('ob: ${state.authData[0].data}');
-                  context.router.replaceAll([BottomNavBar()]);
+                  final data = state.authData[0].data;
+                  try {
+                    final userInfo = UserInfo(
+                      token: data?.token ?? '',
+                      user: User(
+                        id: data?.user?.id ?? 0,
+                        userIdentifier: data?.user?.userIdentifier ?? '',
+                        email: data?.user?.email ?? '',
+                        name: data?.user?.name ?? '',
+                        surname: data?.user?.surname ?? '',
+                        middleName: data?.user?.middleName ?? '',
+                        avatar: data?.user?.avatar ?? '',
+                        userType: data?.user?.userType ?? '',
+                        attendanceCount: data?.user?.attendanceCount ?? '',
+                      ),
+                    );
+                    _preferencesService.setTokenKey(data?.token ?? '');
+                    context.read<UserInfoProvider>().setUserInfo(userInfo);
+                    context.router.replaceAll([BottomNavBar()]);
+                  } catch (e) {
+                    print('Error creating UserInfo: $e');
+                  }
                 } else if (state is LogInFailed) {
                   showDialog(
                       context: context,

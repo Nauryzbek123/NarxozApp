@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AlbumWidget extends StatelessWidget {
+class AlbumWidget extends StatefulWidget {
+  @override
+  State<AlbumWidget> createState() => _AlbumWidgetState();
+}
+
+class _AlbumWidgetState extends State<AlbumWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -9,8 +14,7 @@ class AlbumWidget extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: <Widget>[
           _buildContainer(Colors.blue, leftMargin: 22, rightMargin: 10),
-          _buildContainer(Colors.blue, rightMargin: 10),
-          _buildContainer(Colors.red),
+          
         ],
       ),
     );

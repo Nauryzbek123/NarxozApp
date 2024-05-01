@@ -15,21 +15,20 @@ class LessonsDayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return ListView(
+      shrinkWrap: true,
+      padding: EdgeInsets.only(bottom: 5),
+      physics: NeverScrollableScrollPhysics(),
       children: [
-        Padding(
-          padding: EdgeInsets.only(left: 22),
-          child: ManropeText(
+        ListTile(
+          contentPadding: EdgeInsets.only(left: 22, right: 20),
+          title: ManropeText(
             leftText,
             10,
             AppColors.NavItemGrey,
             FontWeight.bold,
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(right: 20),
-          child: ManropeText(
+          trailing: ManropeText(
             rightText,
             10,
             AppColors.NavItemGrey,

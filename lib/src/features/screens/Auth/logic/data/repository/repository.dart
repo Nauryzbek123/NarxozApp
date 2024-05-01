@@ -34,16 +34,10 @@ class AuthRepositoryImpl implements AuthRepository {
 
    final response = await authDataSource.logInRequest(id, password);
 
-    print('Response Data: $response');
 
     if (response.data is Map<String, dynamic>) {
       final Map<String, dynamic> data = response.data;
-      print('data: $data');
-      print(data.runtimeType);
-
       final AuthModel auth = AuthModel.fromJson(data);
-      print('authModel: $auth');
-
       return [auth];
     } else {
       // Handle the case when response.data is not a map

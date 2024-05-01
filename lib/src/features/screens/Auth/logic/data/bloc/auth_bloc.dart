@@ -21,13 +21,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final response =
             await authRepository.logInRequest(event.id, event.password);
-        print("id: ${event.id}");
-        print("password: ${event.password}");
 
         // Check if the response is a List and not empty
         if (response.isNotEmpty && response[0].success) {
           final data = response[0].data;
-          print(response[0].message);
           emit(LogInSuccess(authData: response));
         } else {
           final errorMessage =
