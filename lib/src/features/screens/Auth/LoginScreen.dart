@@ -80,6 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         attendanceCount: data?.user?.attendanceCount ?? '',
                       ),
                     );
+                    print('userinfo: ${userInfo.token}');
                     _preferencesService.setTokenKey(data?.token ?? '');
                     context.read<UserInfoProvider>().setUserInfo(userInfo);
                     context.router.replaceAll([BottomNavBar()]);

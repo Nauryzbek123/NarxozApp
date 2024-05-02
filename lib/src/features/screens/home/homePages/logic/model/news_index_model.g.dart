@@ -25,22 +25,25 @@ Map<String, dynamic> _$NewsIndexModelToJson(NewsIndexModel instance) =>
 Data _$DataFromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int,
       title: json['title'] as String,
+      sections:
+          (json['sections'] as List<dynamic>).map((e) => e as String).toList(),
       image: json['image'] as String,
-      createdAt: json['createdAt'] as String,
+      createdAt: json['created_at'] as String,
     );
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
+      'sections': instance.sections,
       'image': instance.image,
-      'createdAt': instance.createdAt,
+      'created_at': instance.createdAt,
     };
 
 Links _$LinksFromJson(Map<String, dynamic> json) => Links(
       first: json['first'] as String,
       last: json['last'] as String,
-      prev: json['prev'],
-      next: json['next'],
+      prev: json['prev'] as String?,
+      next: json['next'] as String?,
     );
 
 Map<String, dynamic> _$LinksToJson(Links instance) => <String, dynamic>{
@@ -51,16 +54,16 @@ Map<String, dynamic> _$LinksToJson(Links instance) => <String, dynamic>{
     };
 
 Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
-      currentPage: json['currentPage'] as int,
-      from: json['from'] as int,
-      lastPage: json['lastPage'] as int,
-      links: (json['links'] as List<dynamic>)
-          .map((e) => Link.fromJson(e as Map<String, dynamic>))
+      currentPage: json['currentPage'] as int?,
+      from: json['from'] as int?,
+      lastPage: json['lastPage'] as int?,
+      links: (json['links'] as List<dynamic>?)
+          ?.map((e) => Link.fromJson(e as Map<String, dynamic>))
           .toList(),
-      path: json['path'] as String,
-      perPage: json['perPage'] as int,
-      to: json['to'] as int,
-      total: json['total'] as int,
+      path: json['path'] as String?,
+      perPage: json['perPage'] as int?,
+      to: json['to'] as int?,
+      total: json['total'] as int?,
     );
 
 Map<String, dynamic> _$MetaToJson(Meta instance) => <String, dynamic>{

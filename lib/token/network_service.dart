@@ -10,9 +10,8 @@ class NetworkService {
   NetworkService(this.prefs);
 
   Dio get dio => Dio(); 
-
   Options get option => Options(headers: {
      'Accept': 'application/json',
-        'Authorization': 'Bearer ${prefs.tokenKey}',
+      'Authorization': 'Bearer ${prefs.tokenKey}',
   });
 }

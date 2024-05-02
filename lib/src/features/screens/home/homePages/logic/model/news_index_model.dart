@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'news_index_model.g.dart';
 
+
 @JsonSerializable()
 class NewsIndexModel {
   List<Data> data;
@@ -14,7 +15,8 @@ class NewsIndexModel {
     required this.meta,
   });
 
-  factory NewsIndexModel.fromJson(Map<String, dynamic> json) => _$NewsIndexModelFromJson(json);
+  factory NewsIndexModel.fromJson(Map<String, dynamic> json) =>
+      _$NewsIndexModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$NewsIndexModelToJson(this);
 }
@@ -23,12 +25,15 @@ class NewsIndexModel {
 class Data {
   int id;
   String title;
+  List<String> sections;
   String image;
+  @JsonKey(name: 'created_at') // Specify the field name in JSON
   String createdAt;
 
   Data({
     required this.id,
     required this.title,
+    required this.sections,
     required this.image,
     required this.createdAt,
   });
@@ -42,14 +47,16 @@ class Data {
 class Links {
   String first;
   String last;
-  dynamic prev;
-  dynamic next;
+  @JsonKey(nullable: true) // Make the field nullable
+  String? prev;
+  @JsonKey(nullable: true) // Make the field nullable
+  String? next;
 
   Links({
     required this.first,
     required this.last,
-    required this.prev,
-    required this.next,
+    this.prev,
+    this.next,
   });
 
   factory Links.fromJson(Map<String, dynamic> json) => _$LinksFromJson(json);
@@ -59,24 +66,24 @@ class Links {
 
 @JsonSerializable()
 class Meta {
-  int currentPage;
-  int from;
-  int lastPage;
-  List<Link> links;
-  String path;
-  int perPage;
-  int to;
-  int total;
+  int? currentPage;
+  int? from;
+  int? lastPage;
+  List<Link>? links;
+  String? path;
+  int? perPage;
+  int? to;
+  int? total;
 
   Meta({
-    required this.currentPage,
-    required this.from,
-    required this.lastPage,
+    this.currentPage,
+    this.from,
+    this.lastPage,
     required this.links,
-    required this.path,
-    required this.perPage,
-    required this.to,
-    required this.total,
+    this.path,
+    this.perPage,
+    this.to,
+    this.total,
   });
 
   factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);

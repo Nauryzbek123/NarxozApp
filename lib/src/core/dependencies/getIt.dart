@@ -5,17 +5,20 @@ import 'package:narxoz_project/src/core/dependencies/getIt.config.dart';
 import 'package:narxoz_project/src/features/screens/Auth/logic/data/bloc/auth_bloc.dart';
 import 'package:narxoz_project/src/features/screens/Auth/logic/data/datasource/datasource.dart';
 import 'package:narxoz_project/src/features/screens/Auth/logic/data/repository/repository.dart';
-import 'package:narxoz_project/src/features/screens/home/homePages/logic/bloc/home_bloc.dart';
+import 'package:narxoz_project/src/features/screens/home/homePages/logic/data/bloc/bloc.dart';
 import 'package:narxoz_project/src/features/screens/home/homePages/logic/data/datasource/datasource.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../token/network_service.dart';
 import '../../../token/prefs.dart';
+import '../../features/screens/home/homePages/logic/data/datasource/test/testBloc.dart';
+import '../../features/screens/home/homePages/logic/data/datasource/test/testRepo.dart';
 import '../../features/screens/home/homePages/logic/data/repository/repository.dart';
 
 final getIt = GetIt.instance;
 @InjectableInit(
     initializerName: 'init', preferRelativeImports: true, asExtension: true)
+
 
 Future<void> configureDependencies() async {
   final pref = await SharedPreferences.getInstance();
@@ -33,12 +36,17 @@ void initGetIt() async {
 
   getIt.registerLazySingleton<PreferencesService>(() => PreferencesService());
 
-    getIt.registerFactory<HomeBloc>(() => HomeBloc(getIt()));
+
+
+  getIt.registerFactory<MenuBloc>(() => MenuBloc(getIt()));
 
   getIt
-      .registerLazySingleton<MainPageRepository>(() => MainPageRepositoryImpl(getIt()));
-  
-    getIt.registerLazySingleton<MainPageDataSource>(() => MainPageDataSourceImpl(getIt()));
+      .registerLazySingleton<MenuyRepositoryy>(() => MenuyRepositoryy(getIt()));
+
+  getIt.registerFactory<HomePageBloc>(() => HomePageBloc(getIt()));
+
+  getIt
+      .registerLazySingleton<HomePageRepository>(() => HomePageRepository(getIt()));
 
   getIt.registerLazySingleton<NetworkService>(() => NetworkService(getIt()));
 

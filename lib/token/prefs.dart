@@ -10,7 +10,7 @@ class PreferencesService {
       //Bearer 22|2GLyG1TojxizAoIDoEBpimPWp1LiSo4IqrT25Otofc3e3ea0
   static const String userIdKey = 'userId';
 
-  String _tokenKey = '';
+  late String _tokenKey = '';
   int? _userId;
   String get tokenKey => _tokenKey;
   int? get userId => _userId;
