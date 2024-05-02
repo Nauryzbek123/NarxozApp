@@ -3,12 +3,9 @@ part 'my_lessons_model.g.dart';
 
 @JsonSerializable()
 class MyLessonsModel {
-  @JsonKey(name: "data")
-  List<Data> data;
+  List<Data>? data;
 
-  MyLessonsModel({
-    required this.data,
-  });
+  MyLessonsModel({this.data});
 
   factory MyLessonsModel.fromJson(Map<String, dynamic> json) =>
       _$MyLessonsModelFromJson(json);
@@ -18,15 +15,10 @@ class MyLessonsModel {
 
 @JsonSerializable()
 class Data {
-  @JsonKey(name: "group")
-  String group;
-  @JsonKey(name: "lessons")
-  List<Lesson> lessons;
+  String? group;
+  List<Lessons>? lessons;
 
-  Data({
-    required this.group,
-    required this.lessons,
-  });
+  Data({this.group, this.lessons});
 
   factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
 
@@ -34,69 +26,56 @@ class Data {
 }
 
 @JsonSerializable()
-class Lesson {
-  @JsonKey(name: "id")
-  int id;
-  @JsonKey(name: "section_id")
-  String sectionId;
-  @JsonKey(name: "teacher_id")
-  String teacherId;
-  @JsonKey(name: "title")
-  String title;
-  @JsonKey(name: "characteristics")
-  dynamic characteristics;
-  @JsonKey(name: "description")
-  String description;
-  @JsonKey(name: "poster")
-  dynamic poster;
-  @JsonKey(name: "status")
-  String status;
-  @JsonKey(name: "type")
-  String type;
-  @JsonKey(name: "start_time")
-  String startTime;
-  @JsonKey(name: "end_time")
-  String endTime;
-  @JsonKey(name: "start_date")
-  dynamic startDate;
-  @JsonKey(name: "capacity")
-  String capacity;
-  @JsonKey(name: "day_of_week")
-  String dayOfWeek;
-  @JsonKey(name: "place_id")
-  String placeId;
-  @JsonKey(name: "created_at")
-  dynamic createdAt;
-  @JsonKey(name: "updated_at")
-  DateTime updatedAt;
-  @JsonKey(name: "studentCount")
-  int studentCount;
-  @JsonKey(name: "lesson_date")
-  DateTime lessonDate;
+class Lessons {
+  int? id;
+  String? title;
+  String? description;
+  String? start_time;
+  String? end_time;
+  String? capacity;
+  String? day_of_week;
+  String? status;
+  String? type;
+  String? is_available;
+  String? color_type;
+  Teacher? teacher;
+  int? students_count;
+  String? lesson_date;
 
-  Lesson({
-    required this.id,
-    required this.sectionId,
-    required this.teacherId,
-    required this.title,
-    required this.characteristics,
-    required this.description,
-    required this.poster,
-    required this.status,
-    required this.type,
-    required this.startTime,
-    required this.endTime,
-    required this.startDate,
-    required this.capacity,
-    required this.dayOfWeek,
-    required this.placeId,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.studentCount,
-    required this.lessonDate,
-  });
+  Lessons(
+      {this.id,
+      this.title,
+      this.description,
+      this.start_time,
+      this.end_time,
+      this.capacity,
+      this.day_of_week,
+      this.status,
+      this.type,
+      this.is_available,
+      this.color_type,
+      this.teacher,
+      this.students_count,
+      this.lesson_date});
 
-  factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
+  factory Lessons.fromJson(Map<String, dynamic> json) =>
+      _$LessonsFromJson(json);
 
-  Map<String, dynamic> toJson() => _$LessonToJson(this);
+  Map<String, dynamic> toJson() => _$LessonsToJson(this);
+}
+
+@JsonSerializable()
+class Teacher {
+  int? id;
+  String? name;
+  String? surname;
+  String? middleName;
+  String? avatar;
+
+  Teacher({this.id, this.name, this.surname, this.middleName, this.avatar});
+
+  factory Teacher.fromJson(Map<String, dynamic> json) =>
+      _$TeacherFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TeacherToJson(this);
 }

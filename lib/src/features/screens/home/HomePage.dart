@@ -51,76 +51,83 @@ class _HomePageState extends State<HomePage> {
           children: [
             BlocBuilder<HomePageBloc, HomePageState>(
               builder: (context, state) {
-                if(state is HomeLoading){
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                if (state is HomeLoading) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ColumnSpacer(40),
+                      const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ],
                   );
-                }else if(state is HomePageSuccess){
-                  
-                }
-                
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ColumnSpacer(6),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5, top: 5),
-                          child: Image.asset('assets/png/NavBarNarxoz.png'),
-                        ),
-                        GestureDetector(
-                          onTap: () => AutoRouter.of(context)
-                              .push(const NotificationRoute()),
-                          child: SizedBox(
-                            width: 70,
-                            height: 24,
-                            child: Stack(
-                              children: [
-                                SvgPicture.asset('assets/svg/notifIcon.svg'),
-                                Positioned(
-                                  top: 0,
-                                  left: 22,
-                                  child: Container(
-                                    width: 8,
-                                    height: 8,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.red,
+                } else if (state is HomePageSuccess) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ColumnSpacer(6),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5, top: 5),
+                            child: Image.asset('assets/png/NavBarNarxoz.png'),
+                          ),
+                          GestureDetector(
+                            onTap: () => AutoRouter.of(context)
+                                .push(const NotificationRoute()),
+                            child: SizedBox(
+                              width: 70,
+                              height: 24,
+                              child: Stack(
+                                children: [
+                                  SvgPicture.asset('assets/svg/notifIcon.svg'),
+                                  Positioned(
+                                    top: 0,
+                                    left: 22,
+                                    child: Container(
+                                      width: 8,
+                                      height: 8,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.red,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    ColumnSpacer(5),
+                        ],
+                      ),
+                      ColumnSpacer(5),
 
-                    SizedBox(child: newsIndexView()),
-                    // AlbumWidget(),
-                    ColumnSpacer(5),
-                    Row(
-                      children: [
-                        RowSpacer(3),
-                        OnBoardingBoldBlackText("Тренеры", 16),
-                      ],
-                    ),
-                    const ColumnSpacer(3),
-                    teacherIndexView(),
-                    const ColumnSpacer(1),
-                    const Row(
-                      children: [
-                        RowSpacer(2.4),
-                        OnBoardingBoldBlackText("Мои Занятии", 16),
-                      ],
-                    ),
-                    UserLessonView(),
-                    ColumnSpacer(6),
-                  ],
-                );
+                      SizedBox(child: newsIndexView()),
+                      // AlbumWidget(),
+                      ColumnSpacer(5),
+                      Row(
+                        children: [
+                          RowSpacer(3),
+                          OnBoardingBoldBlackText("Тренеры", 16),
+                        ],
+                      ),
+                      const ColumnSpacer(3),
+                      teacherIndexView(),
+                      const ColumnSpacer(1),
+                      const Row(
+                        children: [
+                          RowSpacer(2.4),
+                          OnBoardingBoldBlackText("Мои Занятии", 16),
+                        ],
+                      ),
+                      UserLessonView(),
+                      ColumnSpacer(6),
+                    ],
+                  );
+                }
+                ;
+                return Container();
               },
             ),
           ],

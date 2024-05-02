@@ -26,8 +26,8 @@ class _teacherIndexViewState extends State<teacherIndexView> {
           if (state is RepositoryError) {
             return Text("is a failure");
           }
-          if (state is TeacherIndexLoaded) {
-            TeachersIndexModel teacherIndex = state.teachersIndex;
+          if (state is HomePageSuccess) {
+            TeachersIndexModel teacherIndex = state.teacherIndex;
             return SizedBox(
                 height: 220,
                 child: ListView.builder(

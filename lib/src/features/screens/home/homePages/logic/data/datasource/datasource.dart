@@ -34,7 +34,6 @@ class MainPageDataSourceImpl implements MainPageDataSource {
         ),
       );
 
-      print('News Index Response: $response');
 
       if (response.statusCode == 200) {
         return response;

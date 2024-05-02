@@ -44,21 +44,19 @@ class HomePageRepository {
   }
 
   Future<MyLessonsModel> getUserLesson() async {
-    print('object3');
+  try {
+    Response response = await service.dio.get('$narxos_host/api/my_lessons', options: service.option);
 
-    Response response = await service.dio
-        .get('$narxos_host/api/my_lessons', options: service.option);
-
-    print('lesson ${response}');
-   if (response.data is Map<String, dynamic>) {
+    if (response.statusCode == 200) {
       final Map<String, dynamic> data = response.data;
       final MyLessonsModel lessons = MyLessonsModel.fromJson(data);
-
-      return lessons; // Wrap the single news instance in a list
+      return lessons;
     } else {
-      print('Invalid data format');
-      throw Exception(
-          'Invalid data format'); // Throw an exception or handle the error according to your requirement
+      throw Exception('Failed to fetch user lessons');
     }
+  } catch (e) {
+    print('Error fetching user lessons: $e');
+    throw Exception('Error fetching user lessons: $e');
   }
+}
 }

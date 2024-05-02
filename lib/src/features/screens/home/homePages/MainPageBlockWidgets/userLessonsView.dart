@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,6 +13,7 @@ import '../../../../../core/widgets/horizontalLine.dart';
 import '../../../../../core/widgets/row_spacer.dart';
 import '../../../../app/widgets/LessonsDayWidget.dart';
 import '../../../../app/widgets/LessonsTimeWidget.dart';
+import 'package:intl/intl.dart';
 
 class UserLessonView extends StatefulWidget {
   const UserLessonView({super.key});
@@ -20,6 +23,7 @@ class UserLessonView extends StatefulWidget {
 }
 
 class _UserLessonViewState extends State<UserLessonView> {
+   bool showAllLessons = false;
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<HomePageBloc>()..add(HomePageInfo()),
@@ -28,47 +32,81 @@ class _UserLessonViewState extends State<UserLessonView> {
           if (state is RepositoryError) {
             return Text("is a failure");
           }
-          if (state is UserLessonLoaded) {
-            return Column(
-              children: [
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 22, right: 20),
-                  title: ManropeText(
-                    "leftText",
-                    10,
-                    AppColors.NavItemGrey,
-                    FontWeight.bold,
-                  ),
-                  trailing: ManropeText(
-                    "rightText",
-                    10,
-                    AppColors.NavItemGrey,
-                    FontWeight.bold,
-                  ),
-                ),
-                HorizontalLine(
-                  width: 348,
-                  color: AppColors.greyLineColor,
-                ),
-                ListView.builder(
-                    padding: EdgeInsets.only(bottom: 50),
-                    scrollDirection: Axis.vertical,
+          if (state is HomePageSuccess) {
+            final lessons = state.myLesson.data ?? [];
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  ListView.builder(
+                    padding: EdgeInsets.only(bottom: 20),
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: 20,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: _buildContainer(),
+                    itemCount: showAllLessons ? lessons.length : (lessons.length > 3 ? 3 : lessons.length),
+                    itemBuilder: (context, index) {
+                      final lessonGroup = lessons[index].group;
+                      final lessonList = lessons[index].lessons ?? [];
+                      return Column(
+                        children: [
+                          ListTile(
+                            contentPadding: EdgeInsets.only(left: 22, right: 20),
+                            title: ManropeText(
+                              lessonGroup ?? "",
+                              10,
+                              AppColors.NavItemGrey,
+                              FontWeight.bold,
+                            ),
+                          ),
+                          HorizontalLine(
+                            width: 348,
+                            color: AppColors.greyLineColor,
+                          ),
+                          ListView.builder(
+                            padding: EdgeInsets.only(bottom: 0),
+                            scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: lessonList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final lesson = lessonList[index];
+                              final teacherName =
+                                  '${lesson.teacher?.name} ${lesson.teacher?.middleName} ${lesson.teacher?.surname}';
+                  
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: _buildContainer(
+                                    lesson.teacher?.avatar ?? '',
+                                    lesson.title ?? '',
+                                    lesson.start_time ?? '',
+                                    lesson.capacity ?? '',
+                                    teacherName,
+                                    lesson.is_available ?? '',
+                                    lesson.students_count ?? 0),
+                              );
+                            },
+                          ),
+                          if (!showAllLessons && lessons.length > 2 && index == 1)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: GestureDetector( 
+                  onTap: (){
+                    setState(() {
+                      showAllLessons = true;
+                    });
+                  },
+                  child: ManropeText(
+                        "Показать еще",
+                        12,
+                        AppColors.redColor,
+                        FontWeight.bold,
+                      ),
+                              ),
+                            )
+                        ],
                       );
-                    }),
-                ManropeText(
-                  "Показать еще",
-                  12,
-                  AppColors.redColor,
-                  FontWeight.bold,
-                ),
-              ],
+                    },
+                  ),
+                ],
+              ),
             );
           }
           return Container();
@@ -77,7 +115,14 @@ class _UserLessonViewState extends State<UserLessonView> {
     );
   }
 
-  Widget _buildContainer() {
+  Widget _buildContainer(
+      String img,
+      String title,
+      String start_time,
+      String time,
+      String teacherName,
+      String is_available,
+      int students_count) {
     return Container(
       height: 63,
       child: Row(
@@ -86,7 +131,7 @@ class _UserLessonViewState extends State<UserLessonView> {
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
             child: CircleAvatar(
-              backgroundColor: Colors.greenAccent[400],
+              backgroundImage: NetworkImage(img),
               radius: 20,
             ),
           ),
@@ -119,7 +164,7 @@ class _UserLessonViewState extends State<UserLessonView> {
                     Padding(
                       padding: EdgeInsets.only(left: 16),
                       child: ManropeText(
-                        "Футбол FT-345",
+                        title,
                         11,
                         AppColors.boldBlackColor,
                         FontWeight.w700,
@@ -128,7 +173,7 @@ class _UserLessonViewState extends State<UserLessonView> {
                     Padding(
                       padding: EdgeInsets.only(right: 20),
                       child: ManropeText(
-                        "8:00",
+                        '$start_time',
                         11,
                         AppColors.regularBlacColor,
                         FontWeight.bold,
@@ -142,7 +187,7 @@ class _UserLessonViewState extends State<UserLessonView> {
                     Padding(
                       padding: EdgeInsets.only(left: 15),
                       child: ManropeText(
-                        "Бакытжан Сериков",
+                        teacherName,
                         10,
                         AppColors.NavItemGrey,
                         FontWeight.normal,
@@ -151,7 +196,7 @@ class _UserLessonViewState extends State<UserLessonView> {
                     Padding(
                       padding: EdgeInsets.only(right: 16),
                       child: ManropeText(
-                        "45 мин",
+                        '${time} мин',
                         7,
                         AppColors.NavItemGrey,
                         FontWeight.bold,
@@ -174,12 +219,14 @@ class _UserLessonViewState extends State<UserLessonView> {
                       child: Container(
                         child: Row(
                           children: [
-                            SvgPicture.asset('assets/svg/UserIcon.svg'),
+                            SvgPicture.asset('assets/svg/UserIcon.svg' ,
+                            color: students_count < 30 ? AppColors.GreenColor : AppColors.NavItemGrey,
+                            ),
                             RowSpacer(0.5),
                             ManropeText(
-                              "30 из 30",
+                              '${students_count} из 30',
                               8,
-                              AppColors.NavItemGrey,
+                              students_count < 30 ? AppColors.GreenColor : AppColors.NavItemGrey.withOpacity(0.25),
                               FontWeight.bold,
                             ),
                           ],
@@ -193,20 +240,21 @@ class _UserLessonViewState extends State<UserLessonView> {
                         height: 14,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
-                          color: AppColors.NavItemGrey.withOpacity(0.25),
+                          color: students_count < 30 ? AppColors.GreenColor.withOpacity(0.25) : AppColors.NavItemGrey,
                         ),
                         child: Center(
                           child: ManropeText(
-                            "Мест нет",
+                            "${is_available}",
                             6,
-                            AppColors.NavItemGrey,
+                            students_count < 30 ? AppColors.GreenColor : AppColors.NavItemGrey,
                             FontWeight.bold,
                           ),
                         ),
                       ),
                     )
                   ],
-                )
+                ), 
+                
               ],
             ),
           )

@@ -14,11 +14,25 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   HomePageBloc(this.repository) : super(HomeLoading()) {
     on<HomePageInfo>((event, emit) async {
       emit(HomeLoading());
+      try {
+        // Fetch all data types
+        final newsIndex = await repository.getNewsIndex();
+        final teachersIndex = await repository.getTeacherIndex();
+        final userLesson = await repository.getUserLesson();
 
+        // Emit HomePageSuccess when all data fetching operations are successful
+        emit(HomePageSuccess(newsIndex,teachersIndex,userLesson));
+        // emit(NewsIndexLoaded(newsIndex));
+        // emit(TeacherIndexLoaded(teachersIndex));
+        // emit(UserLessonLoaded(userLesson));
+      } on DioError catch (e) {
+        emit(RepositoryError(e.message));
+        print(e.message);
+      }
       // Dispatch separate events for each repository method call
-      add(GetNewsIndex());
-      add(GetTeacherIndex());
-      add(GetUserLesson());
+      // add(GetNewsIndex());
+      // add(GetTeacherIndex());
+      // add(GetUserLesson());
     });
 
     on<GetNewsIndex>((event, emit) async {
@@ -86,4 +100,12 @@ class UserLessonLoaded extends HomePageState {
 class RepositoryError extends HomePageState {
   final String message;
   RepositoryError(this.message);
+}
+
+class HomePageSuccess extends HomePageState {
+  final List<NewsIndexModel> newsIndex;
+  final TeachersIndexModel teacherIndex;
+  final MyLessonsModel myLesson;
+
+  HomePageSuccess(this.newsIndex, this.teacherIndex, this.myLesson);
 }

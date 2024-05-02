@@ -22,7 +22,7 @@ class _newsIndexViewState extends State<newsIndexView> {
         builder: (context, state) {
           if (state is RepositoryError) {
             return Text("is a failure");
-          } else if (state is NewsIndexLoaded) {
+          } else if (state is HomePageSuccess) {
             List<NewsIndexModel> newsIndex = state.newsIndex;
 
             return SizedBox(
