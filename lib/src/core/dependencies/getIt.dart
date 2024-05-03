@@ -7,6 +7,7 @@ import 'package:narxoz_project/src/features/screens/Auth/logic/data/datasource/d
 import 'package:narxoz_project/src/features/screens/Auth/logic/data/repository/repository.dart';
 import 'package:narxoz_project/src/features/screens/home/homePages/logic/data/bloc/bloc.dart';
 import 'package:narxoz_project/src/features/screens/home/homePages/logic/data/datasource/datasource.dart';
+import 'package:narxoz_project/src/features/screens/home/sections/logic/bloc/sectionDetailBloc.dart';
 import 'package:narxoz_project/src/features/screens/home/sections/logic/bloc/sectionsIndexBloc.dart';
 import 'package:narxoz_project/src/features/screens/home/sections/logic/repository/repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,5 +57,8 @@ void initGetIt() async {
 
      getIt
       .registerLazySingleton<SectionsRepository>(() => SectionsRepository(getIt()));
+  
+     getIt.registerFactory<SectionDetailBloc>(() => SectionDetailBloc(getIt()));
+
 
 }

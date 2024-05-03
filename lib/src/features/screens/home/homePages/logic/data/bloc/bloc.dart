@@ -38,11 +38,9 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on<GetNewsIndex>((event, emit) async {
       try {
         final newsIndex = await repository.getNewsIndex();
-        print('from bloc news: $newsIndex');
         emit(NewsIndexLoaded(newsIndex));
       } on DioError catch (e) {
         emit(RepositoryError(e.message));
-        print(e.message);
       }
     });
 

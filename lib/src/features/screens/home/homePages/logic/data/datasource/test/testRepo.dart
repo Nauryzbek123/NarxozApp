@@ -13,7 +13,6 @@ class MenuyRepositoryy {
   Future<NewsIndexModel> getProfile() async {
     Response response =
         await service.dio.get('$narxos_host/api/news', options: service.option);
-    print(response);
     return NewsIndexModel.fromJson(response.data['data']);
   }
 }

@@ -13,15 +13,18 @@ import 'package:injectable/injectable.dart' as _i2;
 
 import '../../../token/network_service.dart' as _i4;
 import '../../../token/prefs.dart' as _i3;
-import '../../features/screens/home/homePages/logic/data/bloc/bloc.dart' as _i9;
-import '../../features/screens/home/homePages/logic/data/datasource/test/testBloc.dart'
+import '../../features/screens/home/homePages/logic/data/bloc/bloc.dart'
     as _i10;
+import '../../features/screens/home/homePages/logic/data/datasource/test/testBloc.dart'
+    as _i11;
 import '../../features/screens/home/homePages/logic/data/datasource/test/testRepo.dart'
     as _i7;
 import '../../features/screens/home/homePages/logic/data/repository/repository.dart'
     as _i6;
-import '../../features/screens/home/sections/logic/bloc/sectionsIndexBloc.dart'
+import '../../features/screens/home/sections/logic/bloc/sectionDetailBloc.dart'
     as _i8;
+import '../../features/screens/home/sections/logic/bloc/sectionsIndexBloc.dart'
+    as _i9;
 import '../../features/screens/home/sections/logic/repository/repository.dart'
     as _i5;
 
@@ -45,11 +48,13 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i6.HomePageRepository(gh<_i4.NetworkService>()));
     gh.factory<_i7.MenuyRepositoryy>(
         () => _i7.MenuyRepositoryy(gh<_i4.NetworkService>()));
-    gh.factory<_i8.SectionsIndexBloc>(
-        () => _i8.SectionsIndexBloc(gh<_i5.SectionsRepository>()));
-    gh.factory<_i9.HomePageBloc>(
-        () => _i9.HomePageBloc(gh<_i6.HomePageRepository>()));
-    gh.factory<_i10.MenuBloc>(() => _i10.MenuBloc(gh<_i7.MenuyRepositoryy>()));
+    gh.factory<_i8.SectionDetailBloc>(
+        () => _i8.SectionDetailBloc(gh<_i5.SectionsRepository>()));
+    gh.factory<_i9.SectionsIndexBloc>(
+        () => _i9.SectionsIndexBloc(gh<_i5.SectionsRepository>()));
+    gh.factory<_i10.HomePageBloc>(
+        () => _i10.HomePageBloc(gh<_i6.HomePageRepository>()));
+    gh.factory<_i11.MenuBloc>(() => _i11.MenuBloc(gh<_i7.MenuyRepositoryy>()));
     return this;
   }
 }

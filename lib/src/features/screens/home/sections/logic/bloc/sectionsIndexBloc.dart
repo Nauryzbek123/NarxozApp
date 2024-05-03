@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:narxoz_project/src/features/screens/home/sections/logic/models/LessonByDateModel.dart';
 
+import '../models/SectionShowModel.dart';
 import '../models/SectionsIndexModel.dart';
 import '../repository/repository.dart';
 

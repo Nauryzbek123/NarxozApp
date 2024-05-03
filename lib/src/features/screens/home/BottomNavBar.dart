@@ -6,6 +6,7 @@ import 'package:narxoz_project/src/core/dependencies/getIt.dart';
 import 'package:narxoz_project/src/core/resources/app_colors.dart';
 import 'package:narxoz_project/src/features/app/router/router.gr.dart';
 import 'package:narxoz_project/src/features/screens/home/homePages/logic/data/bloc/bloc.dart';
+import 'package:narxoz_project/src/features/screens/home/sections/logic/bloc/sectionsIndexBloc.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});

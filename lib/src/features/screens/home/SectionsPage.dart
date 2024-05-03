@@ -61,7 +61,6 @@ class SectionsPage extends StatelessWidget {
               } else if (state is SectionsIndexSuccess) {
                 List<SectionsIndexModel> data = state.sectionsIndex;
 
-                print('data: ${jsonEncode(data)}');
                 int itemCount = 0;
                 for (SectionsIndexModel section in data) {
                   if (section.data != null) {
@@ -86,10 +85,14 @@ class SectionsPage extends StatelessWidget {
                           for (SectionsIndexModel section in data) {
                             if (section.data != null &&
                                 index < dataIndex + section.data!.length) {
+                              final uniqueId =
+                                  section.data![index - dataIndex].id;
                               return GestureDetector(
                                   onTap: () {
-                                    AutoRouter.of(context)
-                                        .push(const SectionsDetailRoute());
+                                    AutoRouter.of(context).push(
+                                        SectionsDetailRoute(id: uniqueId ?? 1));
+                                         print(uniqueId);
+
                                   },
                                   child: SectionsSportContainer(
                                       data: section.data![index - dataIndex]));

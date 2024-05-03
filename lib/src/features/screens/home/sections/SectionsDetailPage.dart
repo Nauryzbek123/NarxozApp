@@ -3,16 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:narxoz_project/src/core/widgets/column_spacer.dart';
+import 'package:narxoz_project/src/features/screens/home/sections/logic/bloc/sectionDetailBloc.dart';
+import '../../../../core/dependencies/getIt.dart';
 import '../../../../core/resources/ManropeText.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/widgets/row_spacer.dart';
 import '../../../app/widgets/GoBackCircleWidget.dart';
 import '../../../app/widgets/DayliOrSectButton.dart';
+import 'logic/bloc/sectionsIndexBloc.dart';
 
 class SectionsDetailPage extends StatefulWidget {
-  const SectionsDetailPage({super.key});
+  final int id;
+  const SectionsDetailPage({super.key, required this.id});
 
   @override
   State<SectionsDetailPage> createState() => _SectionsDetailPageState();
@@ -20,96 +25,100 @@ class SectionsDetailPage extends StatefulWidget {
 
 class _SectionsDetailPageState extends State<SectionsDetailPage> {
   int pageIndex = 0;
-  
+
   List<Widget> list1 = [
     containerColor(AppColors.greyLightColor, 'assets/png/Teacher.png'),
     containerColor(AppColors.greyLightColor, 'assets/png/Teacher.png'),
     containerColor(AppColors.greyLightColor, 'assets/png/Teacher.png')
   ];
-
+//  getIt<SectionDetailBloc>()..add(SectionDetailInfo(id)),
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        body: SingleChildScrollView(
-            child: Column(
-      children: [
-        SizedBox(
-          width: fullWidth,
-          height: 250,
-          child: Stack(
-            children: [
-              PageView(
+      body:  SingleChildScrollView(
+                  child: Column(
                 children: [
-                  ...list1
-                      .map((widget) => SizedBox.expand(child: widget))
-                      .toList(),
-                ],
-                onPageChanged: (index) {
-                  setState(() {
-                    pageIndex = index;
-                  });
-                },
-              ),
-              Positioned(
-                top: 50,
-                left: 0,
-                child: Row(
-                  children: [
-                    RowSpacer(3),
-                    GoBackCircleWidget(
-                        color: AppColors.regularBlacColor.withOpacity(0.24)),
-                    RowSpacer(3),
-                    ManropeText(
-                      "Общая Физическая Под...",
-                      18,
-                      AppColors.whiteColor,
-                      FontWeight.bold,
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                bottom: 20,
-                left: 0,
-                right: 0,
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      for (int i = 0; i < list1.length; i++)
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          width: 9.0,
-                          height: 9.0,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: pageIndex == i
-                                ? AppColors.whiteColor
-                                : AppColors.regularBlacColor.withOpacity(1),
+                  SizedBox(
+                    width: fullWidth,
+                    height: 250,
+                    child: Stack(
+                      children: [
+                        PageView(
+                          children: [
+                            ...list1
+                                .map((widget) => SizedBox.expand(child: widget))
+                                .toList(),
+                          ],
+                          onPageChanged: (index) {
+                            setState(() {
+                              pageIndex = index;
+                            });
+                          },
+                        ),
+                        Positioned(
+                          top: 50,
+                          left: 0,
+                          child: Row(
+                            children: [
+                              RowSpacer(3),
+                              GoBackCircleWidget(
+                                  color: AppColors.regularBlacColor
+                                      .withOpacity(0.24)),
+                              RowSpacer(3),
+                              ManropeText(
+                                "Общая Физическая Под...",
+                                18,
+                                AppColors.whiteColor,
+                                FontWeight.bold,
+                              ),
+                            ],
                           ),
                         ),
-                    ],
+                        Positioned(
+                          bottom: 20,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                for (int i = 0; i < list1.length; i++)
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
+                                    width: 9.0,
+                                    height: 9.0,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: pageIndex == i
+                                          ? AppColors.whiteColor
+                                          : AppColors.regularBlacColor
+                                              .withOpacity(1),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        ColumnSpacer(2),
-        Padding(
-          padding: const EdgeInsets.only(right: 60),
-          child: ManropeText(
-                        "Общая Физическая Подготовка",
-                        16,
-                        AppColors.boldBlackColor,
-                        FontWeight.w700,
-                      ),
-        ),
-        DayliOrSectButton()
-      ],
-    )));
+                  ColumnSpacer(2),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 60),
+                    child: ManropeText(
+                      "Общая Физическая Подготовка21",
+                      16,
+                      AppColors.boldBlackColor,
+                      FontWeight.w700,
+                    ),
+                  ),
+                  DayliOrSectButton()
+                ],
+              ))
+    );
   }
 }
 

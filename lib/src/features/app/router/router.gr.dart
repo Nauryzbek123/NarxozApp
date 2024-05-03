@@ -12,6 +12,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i21;
+import 'package:flutter/cupertino.dart' as _i23;
 import 'package:flutter/material.dart' as _i22;
 
 import '../../screens/Auth/LoginScreen.dart' as _i5;
@@ -87,9 +88,13 @@ class AppRouter extends _i21.RootStackRouter {
       );
     },
     SectionsDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<SectionsDetailRouteArgs>();
       return _i21.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i8.SectionsDetailPage(),
+        child: _i8.SectionsDetailPage(
+          key: args.key,
+          id: args.id,
+        ),
       );
     },
     ShowLessonStudent.name: (routeData) {
@@ -346,14 +351,36 @@ class NotificationRoute extends _i21.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.SectionsDetailPage]
-class SectionsDetailRoute extends _i21.PageRouteInfo<void> {
-  const SectionsDetailRoute()
-      : super(
+class SectionsDetailRoute extends _i21.PageRouteInfo<SectionsDetailRouteArgs> {
+  SectionsDetailRoute({
+    _i23.Key? key,
+    required int id,
+  }) : super(
           SectionsDetailRoute.name,
           path: '/sectionsPage',
+          args: SectionsDetailRouteArgs(
+            key: key,
+            id: id,
+          ),
         );
 
   static const String name = 'SectionsDetailRoute';
+}
+
+class SectionsDetailRouteArgs {
+  const SectionsDetailRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final _i23.Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'SectionsDetailRouteArgs{key: $key, id: $id}';
+  }
 }
 
 /// generated route for

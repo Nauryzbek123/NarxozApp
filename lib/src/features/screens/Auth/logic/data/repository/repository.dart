@@ -20,16 +20,7 @@ class AuthRepositoryImpl implements AuthRepository {
     String id,
     String password,
   ) async {
-    // final response = await authDataSource.logInRequest(id, password);
-
-    // print('Response Data: $response');
-    // await authDataSource.logInRequest(id, password);
-    // final Map<String, dynamic> data = json.decode(json.encode(response.data));
-    // print('data: $data');
-    // print(data.runtimeType);
-    // final List<AuthModel> auth = AuthModel.listFromJson(data);
-    // print('authModel: $auth');
-    // return auth;
+    
    
 
    final response = await authDataSource.logInRequest(id, password);
